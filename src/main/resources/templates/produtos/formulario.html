@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${produto.id != null} ? 'Editar Produto' : 'Novo Produto'"></title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<h1 th:text="${produto.id != null} ? 'Editar Produto' : 'Novo Produto'"></h1>
+
+<form th:action="@{/produtos/salvar}" method="post" th:object="${produto}">
+
+    <!-- ID (somente visível na edição) -->
+    <input type="hidden" th:if="${produto.id != null}" th:field="*{id}">
+
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" th:field="*{nome}" required>
+    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error"></span>
+
+    <label for="descricao">Descrição:</label>
+    <textarea id="descricao" th:field="*{descricao}" required></textarea>
+    <span th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}" class="error"></span>
+
+    <label for="preco">Preço:</label>
+    <input type="number" id="preco" step="0.01" th:field="*{preco}" required>
+    <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}" class="error"></span>
+
+    <label for="telefone">Telefone:</label>
+    <input type="text" id="telefone" th:field="*{telefone}" placeholder="(XX) XXXX-XXXX ou (XX) XXXXX-XXXX" required>
+    <span th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}" class="error"></span>
+
+    <label for="dataCadastro">Data de Cadastro:</label>
+    <input type="date" id="dataCadastro" th:field="*{dataCadastro}" required>
+    <span th:if="${#fields.hasErrors('dataCadastro')}" th:errors="*{dataCadastro}" class="error"></span>
+
+    <button type="submit">Salvar</button>
+    <a href="/produtos">Cancelar</a>
+</form>
+
+</body>
+</html>
