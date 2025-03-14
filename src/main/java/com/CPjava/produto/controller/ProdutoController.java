@@ -19,34 +19,34 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    // ✅ Listar todos os produtos
+    
     @GetMapping
     public String listar(Model model) {
         List<Produto> produtos = produtoService.listarTodos();
         model.addAttribute("produtos", produtos);
-        return "produtos/listar"; // Certifique-se de que esse nome corresponde ao arquivo listar.html
+        return "produtos/listar"; 
     }
 
-    // ✅ Exibir formulário para criar um novo produto
+    
     @GetMapping("/novo")
     public String formularioNovo(Model model) {
-        Produto produto = new Produto(); // Certifique-se de criar um novo objeto
+        Produto produto = new Produto(); 
         model.addAttribute("produto", produto);
-        return "produtos/formulario"; // Nome correto do template
+        return "produtos/formulario"; 
     }
 
-    // ✅ Salvar um novo produto ou atualizar um existente
+    
     @PostMapping("/salvar")
     public String salvar(@Valid @ModelAttribute("produto") Produto produto, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("produto", produto); // Retorna os dados já preenchidos no formulário
+            model.addAttribute("produto", produto); 
             return "produtos/formulario";
         }
         produtoService.salvar(produto);
         return "redirect:/produtos";
     }
 
-    // ✅ Editar um produto existente
+   
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         Optional<Produto> produtoOpt = produtoService.buscarPorId(id);
@@ -54,11 +54,11 @@ public class ProdutoController {
             model.addAttribute("produto", produtoOpt.get());
             return "produtos/formulario";
         } else {
-            return "redirect:/produtos"; // Redireciona caso o ID não seja encontrado
+            return "redirect:/produtos"; 
         }
     }
 
-    // ✅ Excluir um produto por ID
+    
     @GetMapping("/deletar/{id}")
     public String deletar(@PathVariable Long id) {
         produtoService.excluir(id);
